@@ -1,0 +1,5 @@
+# Ignore everything inside build/
+apptainer/container_layers/build/*
+
+# But keep the .gitkeep file
+!apptainer/container_layers/build/.gitkeep

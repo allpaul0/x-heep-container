@@ -1,0 +1,16 @@
+Bootstrap: localimage
+From: container_layers/build/conda.sif
+
+%environment
+    export RISCV=/opt/tools/riscv
+    export PATH=${RISCV}/bin:$PATH
+
+%post
+    cd /opt
+    # Clone the RISC-V GNU toolchain (including GCC, binutils, newlib, etc.)
+    git clone https://github.com/riscv-collab/riscv-gnu-toolchain
+    cd riscv-gnu-toolchain
+    # Configure for a newlib cross-compiler with prefix /opt/tools/riscv
+    ./configure --prefix=opt/tools/riscv
+    # Build the toolchain (this will build GCC, binutils, newlib, etc.)
+    make -j$(nproc)

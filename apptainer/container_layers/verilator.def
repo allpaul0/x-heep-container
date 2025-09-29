@@ -1,0 +1,21 @@
+Bootstrap: localimage
+From: container_layers/build/base.sif
+
+%labels 
+    Stage verilator environment
+
+%environment
+    export VERILATOR_VERSION=4.210
+    
+%post
+    export VERILATOR_VERSION=4.210
+
+    # Install Verilator
+    git clone https://github.com/verilator/verilator.git
+    cd verilator
+    git checkout v$VERILATOR_VERSION
+
+    autoconf
+    ./configure --prefix=/opt/tools/verilator/$VERILATOR_VERSION
+    make -j$(nproc)
+    make install

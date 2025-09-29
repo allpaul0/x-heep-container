@@ -1,0 +1,27 @@
+Bootstrap: docker
+From: ubuntu:22.04
+
+%labels
+    Author Luigi Giuffrida, Paul Allaire
+    Stage base system
+
+%environment
+    # Ensure /usr/local/bin and /usr/bin are in PATH -> useless
+    # in fact they are in PATH by default 
+    # export PATH=/usr/local/bin:/usr/bin:$PATH
+
+%post
+    # Set non-interactive frontend to avoid tzdata prompt
+    export DEBIAN_FRONTEND=noninteractive
+    ln -fs /usr/share/zoneinfo/Etc/UTC /etc/localtime
+    apt-get update && apt-get install -y \
+         lcov libelf1 libelf-dev libftdi1-2 libftdi1-dev libncurses5 libssl-dev \
+         libglib2.0-dev libudev-dev libusb-1.0-0 lsb-release texinfo autoconf \
+         automake autotools-dev libmpc-dev libmpfr-dev libgmp-dev gperf libtool \
+         patchutils bc zlib1g-dev cmake flex bison libexpat-dev gawk tree xterm \
+         python3-venv python3-dev ninja-build git wget python3 build-essential \
+         make coreutils libfindbin-libs-perl g++ curl && 2
+        rm -rf /var/lib/apt/lists/* 
+        # for ubuntu:20.04
+        # dpkg-reconfigure -f noninteractive tzdata
+

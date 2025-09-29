@@ -1,5 +1,5 @@
-# x-heep-docker
-This repository contains the dockerfile to build the [X-HEEP](https://github.com/esl-epfl/x-heep) docker (hosted on https://hub.docker.com/r/luigi2898/x-heep)
+# docker
+This folder contains the dockerfile to build the [X-HEEP](https://github.com/esl-epfl/x-heep) docker (hosted on https://hub.docker.com/r/luigi2898/x-heep)
 
 # Docker content
 
