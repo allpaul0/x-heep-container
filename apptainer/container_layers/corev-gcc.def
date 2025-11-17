@@ -1,0 +1,12 @@
+Bootstrap: localimage
+From: container_layers/build/conda.sif
+
+%post
+    cd /opt
+    # Clone the COREV GNU toolchain (including GCC, binutils, newlib, etc.)
+    git clone 
+    cd corev
+    # Configure for a newlib cross-compiler with prefix /opt/tools/riscv
+    ./configure --prefix=/opt/tools/riscv
+    # Build the toolchain (this will build GCC, binutils, newlib, etc.)
+    make -j$(nproc)
