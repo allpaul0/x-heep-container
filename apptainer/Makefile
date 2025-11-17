@@ -31,6 +31,11 @@ $(BUILD_DIR)/conda.sif: $(DEF_DIR)/conda.def $(BUILD_DIR)/verible.sif
 $(BUILD_DIR)/gcc.sif: $(DEF_DIR)/gcc.def $(BUILD_DIR)/conda.sif 
 	$(APPTAINER) build $@ $<
 
+# CORE-V GCC (depends on gcc)
+$(BUILD_DIR)/corev-gcc.sif: $(DEF_DIR)/gcc.def $(BUILD_DIR)/gcc.sif 
+	$(APPTAINER) build $@ $<
+
+
 # Convenience targets
 .PHONY: all base verilator verible conda gcc clean help 
 base: $(BUILD_DIR)/base.sif
@@ -38,6 +43,7 @@ verilator: $(BUILD_DIR)/verilator.sif
 verible: $(BUILD_DIR)/verible.sif
 conda: $(BUILD_DIR)/conda.sif
 gcc: $(BUILD_DIR)/gcc.sif
+corev-gcc: $(BUILD_DIR)/corev-gcc.sif
 
 
 # Remove generated SIFs
@@ -51,5 +57,6 @@ help:
 	@echo "  make verilator  # build verilator image (depends on base)"
 	@echo "  make verible    # build verible image (depends on verilator)"
 	@echo "  make conda      # build conda image (depends on verible)"
-	@echo "  make gcc		 # build gcc last (depends on conda.sif)"
+	@echo "  make gcc		 # build gcc last (depends on conda)"
+	@echo "  make corev-gcc  # build corev-gcc image (depends on corev-gcc)"
 	@echo "  make clean      # remove all generated .sif files"
