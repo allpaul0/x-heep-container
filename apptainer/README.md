@@ -33,6 +33,14 @@ make gcc
 make gcc
 ```
 
+## If asked to recompile a sif when it exists in build
+When running make gcc, make can ask to re-build already existing sif
+if it considers them old. 
+Mark existing .sif files as up-to-date by updating the timestamp
+```
+touch container_layers/build/*.sif
+```
+
 ## Rebuild a layer using the .sif from previous layers
 Let's say your build from gcc failed or you used the wrong parameters, you can rebuild that specific layer. 
 
