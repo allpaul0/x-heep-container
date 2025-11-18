@@ -4,9 +4,10 @@ From: container_layers/build/conda.sif
 %post
     cd /opt
     # Clone the COREV GNU toolchain (including GCC, binutils, newlib, etc.)
-    git clone 
-    cd corev
+    git clone https://github.com/openhwgroup/corev-gcc.git
+    cd corev-gcc/
+    git checkout cv32e40pv2-release
     # Configure for a newlib cross-compiler with prefix /opt/tools/riscv
-    ./configure --prefix=/opt/tools/riscv
+    ./configure --prefix=/opt/tools/riscv --with-arch=rv32i --with-abi=ilp32 --enable-multilib --with-multilib-generator="rv32i-ilp32--;rv32ic-ilp32--;rv32im-ilp32--;rv32imc-ilp32--;rv32e-ilp32e--;rv32ec-ilp32e--;rv32em-ilp32e--;rv32emc-ilp32e--;rv32if_zicsr-ilp32f--;rv32ifc_zicsr-ilp32f--;rv32imf_zicsr-ilp32f--;rv32imfc_zicsr-ilp32f--;rv32ifd_zicsr-ilp32d--;rv32ifdc_zicsr-ilp32d--;rv32imfd_zicsr-ilp32d--;rv32imfdc_zicsr-ilp32d--;rv32im_xcvalu_xcvbi_xcvbitmanip_xcvhwlp_xcvmac_xcvmem_xcvsimd-ilp32--;rv32imc_xcvalu_xcvbi_xcvbitmanip_xcvhwlp_xcvmac_xcvmem_xcvsimd-ilp32--;rv32imf_zicsr_xcvalu_xcvbi_xcvbitmanip_xcvhwlp_xcvmac_xcvmem_xcvsimd-ilp32f--;rv32imfc_zicsr_xcvalu_xcvbi_xcvbitmanip_xcvhwlp_xcvmac_xcvmem_xcvsimd-ilp32f--;rv32imfd_zicsr_xcvalu_xcvbi_xcvbitmanip_xcvhwlp_xcvmac_xcvmem_xcvsimd-ilp32d--;rv32imfdc_zicsr_xcvalu_xcvbi_xcvbitmanip_xcvhwlp_xcvmac_xcvmem_xcvsimd-ilp32d--;rv32im_zicsr_zfinx_xcvalu_xcvbi_xcvbitmanip_xcvhwlp_xcvmac_xcvmem_xcvsimd-ilp32--;rv32imc_zicsr_zfinx_xcvalu_xcvbi_xcvbitmanip_xcvhwlp_xcvmac_xcvmem_xcvsimd-ilp32--;"
     # Build the toolchain (this will build GCC, binutils, newlib, etc.)
     make -j$(nproc)
