@@ -32,7 +32,7 @@ $(BUILD_DIR)/gcc.sif: $(DEF_DIR)/gcc.def $(BUILD_DIR)/conda.sif
 	$(APPTAINER) build $@ $<
 
 # CORE-V GCC (depends on gcc)
-$(BUILD_DIR)/corev-gcc.sif: $(DEF_DIR)/gcc.def $(BUILD_DIR)/gcc.sif 
+$(BUILD_DIR)/corev-gcc.sif: $(DEF_DIR)/corev-gcc.def $(BUILD_DIR)/gcc.sif 
 	$(APPTAINER) build $@ $<
 
 
@@ -58,5 +58,5 @@ help:
 	@echo "  make verible    # build verible image (depends on verilator)"
 	@echo "  make conda      # build conda image (depends on verible)"
 	@echo "  make gcc		 # build gcc last (depends on conda)"
-	@echo "  make corev-gcc  # build corev-gcc image (depends on corev-gcc)"
+	@echo "  make corev-gcc  # build corev-gcc image (depends on gcc)"
 	@echo "  make clean      # remove all generated .sif files"
