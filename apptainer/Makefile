@@ -32,8 +32,13 @@ $(BUILD_DIR)/gcc.sif: $(DEF_DIR)/gcc.def $(BUILD_DIR)/conda.sif
 	$(APPTAINER) build $@ $<
 
 # CORE-V GCC (depends on gcc)
-$(BUILD_DIR)/corev-gcc.sif: $(DEF_DIR)/corev-gcc.def $(BUILD_DIR)/gcc.sif 
+$(BUILD_DIR)/corev-gcc.sif: $(DEF_DIR)/corev-gcc.def $(BUILD_DIR)/gcc.sif
 	$(APPTAINER) build $@ $<
+
+# X-HEEP (depends on corev-gcc)
+$(BUILD_DIR)/x-heep.sif: $(DEF_DIR)/x-heep.def $(BUILD_DIR)/corev-gcc.sif
+	$(APPTAINER) build $@ $<
+
 
 
 # Convenience targets
@@ -44,7 +49,7 @@ verible: $(BUILD_DIR)/verible.sif
 conda: $(BUILD_DIR)/conda.sif
 gcc: $(BUILD_DIR)/gcc.sif
 corev-gcc: $(BUILD_DIR)/corev-gcc.sif
-
+x-heep: $(BUILD_DIR)/x-heep.sif
 
 # Remove generated SIFs
 clean:
@@ -59,4 +64,5 @@ help:
 	@echo "  make conda      # build conda image (depends on verible)"
 	@echo "  make gcc		 # build gcc last (depends on conda)"
 	@echo "  make corev-gcc  # build corev-gcc image (depends on gcc)"
+	@echo "  make x-heep  # build x-heep image (depends on corev-gcc)"
 	@echo "  make clean      # remove all generated .sif files"

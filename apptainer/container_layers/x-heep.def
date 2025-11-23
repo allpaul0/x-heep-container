@@ -1,0 +1,14 @@
+Bootstrap: localimage
+From: container_layers/build/corev-gcc.sif
+
+%labels
+    Stage x-heep environment
+
+%post
+    git clone https://github.com/allpaul0/x-heep.git /x-heep
+    cd /x-heep
+    git checkout 9_11_25
+
+    # Generate environment.yml from python-requirements.txt and applies it 
+    make conda
+
