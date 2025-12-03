@@ -70,6 +70,25 @@ here the bind puts x-heep to the root of the filesystem
 apptainer exec --bind /home/myuse/x-heep:/x-heep container_layers/
 ```
 
+## Production
+## Create an overlay (a writable overlay FS, binded at runtime)
+Creates a 4Go overlay.
+```bash
+apptainer overlay create --size 4096 container_layers/build/overlay.img
+```
+
+Bind the overlay to the apptainer.
+```bash
+apptainer shell --overlay container_layers/build/overlay.img container_layers/build/x-heep.sif 
+```
+
+## Development
+
+Bind a dir to the apptainer.
+```bash
+apptainer shell --bind x-heep:/opt/x-heep container_layers/build/x-heep.sif  
+```
+
 # Use X-HEEP
 Follow the [README](https://github.com/esl-epfl/x-heep) of X-HEEP to build hardware and run applications.
 
