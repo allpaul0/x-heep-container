@@ -89,6 +89,11 @@ Bind a dir to the apptainer.
 apptainer shell --bind x-heep:/opt/x-heep container_layers/build/x-heep.sif  
 ```
 
+## scp to INSA cluster
+```bash
+scp container_layers/build/x-heep.sif $USER@cluster-recherche-tete.insa-rennes.fr:.
+```
+
 # Use X-HEEP
 Follow the [README](https://github.com/esl-epfl/x-heep) of X-HEEP to build hardware and run applications.
 
