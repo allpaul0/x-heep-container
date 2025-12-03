@@ -1,14 +1,28 @@
 Bootstrap: localimage
 From: container_layers/build/corev-gcc.sif
 
+%environment
+    echo $PATH
+
+    . /opt/tools/conda/etc/profile.d/conda.sh
+    conda activate core-v-mini-mcu
+    echo "Welcome to the RISC-V development environment (conda core-v-mini-mcu)"
+
+    export VERIBLE_VERSION=v0.0-1824-ga3b5bedf
+    export VERILATOR_VERSION=4.210
+
+    export PATH=/opt/tools/verible/${VERIBLE_VERSION}/bin:/opt/tools/verilator/${VERILATOR_VERSION}/bin:$PATH
+
+    echo $PATH
+
 %labels
     Stage x-heep environment
 
 %post
+    # Clone x-heep repository
     git clone https://github.com/allpaul0/x-heep.git /x-heep
     cd /x-heep
     git checkout 9_11_25
 
     # Generate environment.yml from python-requirements.txt and applies it 
     make conda
-
