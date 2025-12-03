@@ -5,23 +5,11 @@ From: container_layers/build/verible.sif
     Stage conda environment
 
 %environment
-    # Put conda first in PATH
-    # export PATH=/opt/tools/conda/bin:/opt/tools/conda/condabin:$PATH
-
     echo $PATH
     # Source conda.sh so "conda activate" works
     . /opt/tools/conda/etc/profile.d/conda.sh
+    export PY=/opt/tools/conda/bin/python
     echo $PATH
-
-    # (Optional) auto-activate your env
-    conda info --envs
-    conda activate core-v-mini-mcu
-
-    echo "Welcome to the RISC-V development environment (conda core-v-mini-mcu)"
-
-%files
-    # the x-heep project need to be cloned in the apptainer folder
-    # x-heep/environment.yml /environment.yml
 
 %post
     export DEBIAN_FRONTEND=noninteractive
@@ -35,23 +23,3 @@ From: container_layers/build/verible.sif
     # Accept TOS for main + r channels (optional, to avoid prompts)
     /opt/tools/conda/bin/conda tos accept --override-channels --channel https://repo.anaconda.com/pkgs/main || true
     /opt/tools/conda/bin/conda tos accept --override-channels --channel https://repo.anaconda.com/pkgs/r || true
-
-    #. /opt/tools/conda/etc/profile.d/conda.sh
-
-    # setting up the conda env core-v-mini-mcu
-    # the file environment.yml is needed for that 
-    # I fetch the up-to-date environment.yml file using a temporary clone of the x-heep project
-    git clone https://github.com/esl-epfl/x-heep.git /tmp_x-heep
-    cd /tmp_x-heep
-
-    # make sure python and conda are in PATH for calling `make conda` 
-    export PY=/opt/tools/conda/bin/python
-    . /opt/tools/conda/etc/profile.d/conda.sh
-
-    # Generate environment.yml from python-requirements.txt and applies it 
-    make conda
-
-    cd .. 
-    rm -rf tmp_x-heep
-
-    /opt/tools/conda/bin/conda info --envs
